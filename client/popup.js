@@ -17,7 +17,12 @@ function googleTranslate() {
         .then(response => response.json())
         .then(data => {
             var newContent = data.result;
-            node.nodeValue = newContent;
+            if (data.ok) {
+              var newNode = document.createElement('span');
+              newNode.innerHTML = newContent;
+              node.parentNode.replaceChild(newNode, node);
+            }
+            
         })
         .catch(error => console.error('Error:', error));
     }

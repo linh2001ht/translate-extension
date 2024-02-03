@@ -19,7 +19,9 @@ class TransTextAPIView(APIView):
         text = request.data.get('text', '')
 
         dicts = Dict.objects.filter(lang=lang)
+        result = text
+        ok = False
         for dict in dicts:
-            text = text.replace(dict.origi, dict.dic)
-
-        return Response({'result': text})
+            result = result.replace(dict.origi, "<mark>"+dict.dic+"</mark>")
+        ok = text != result
+        return Response({'result': result, 'ok': ok})
